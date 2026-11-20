@@ -1,0 +1,34 @@
+{
+  "name": "fennek",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "assets": {
+    "directory": "../site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/v1/*", "/mcp", "/mcp/*", "/llms.txt"]
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "fennek",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/15 * * * *"]
+  },
+  "vars": {
+    "BRAND_NAME": "FENNEK",
+    "TOKEN_SYMBOL": "FENNEK",
+    "TOKEN_ADDRESS": "",
+    "HOLD_SCOUT": "1000000",
+    "HOLD_ALPHA": "5000000",
+    "X_URL": "",
+    "GITHUB_URL": "https://github.com/Fennek-Check/fennek"
+  }
+}

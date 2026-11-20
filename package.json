@@ -1,0 +1,19 @@
+{
+  "name": "fennek",
+  "version": "1.0.0",
+  "description": "FENNEK — Autonomous Solana Scout Stream, Direct Fox Chat, Verbatim Evidence Verifier & Streamable HTTP MCP.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "homepage": "https://fennek.fun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fennek-Check/fennek.git"
+  },
+  "scripts": {
+    "dev": "node worker/dev-server.mjs",
+    "test": "node --test test/fennek.test.mjs"
+  },
+  "license": "MIT"
+}
