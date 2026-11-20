@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="https://fennek.fun"><strong>Live Studio (fennek.fun)</strong></a> ·
+  <a href="https://x.com/fennekcheck"><strong>X (@fennekcheck)</strong></a> ·
   <a href="https://fennek.fun/mcp"><strong>MCP Endpoint (/mcp)</strong></a> ·
   <a href="https://fennek.fun/SKILL.md"><strong>SKILL.md</strong></a> ·
   <a href="https://fennek.fun/llms.txt"><strong>llms.txt</strong></a>

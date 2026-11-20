@@ -3,187 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FENNEK — Live Solana Scout Stream &amp; Fox Chat</title>
-  <meta name="description" content="90% ear, 10% fox. Listening underneath Solana — live multi-step token &amp; wallet digs, direct fox chat, and shared MCP memory." />
+  <title>FENNEK — Live Solana Stream &amp; Chat</title>
+  <meta name="description" content="90% ear, 10% fox. Listening underneath Solana — instant token checks, live AI dig stream, direct fox chat, and open MCP memory." />
   <meta property="og:title" content="FENNEK — Listening Underneath Solana" />
-  <meta property="og:description" content="Live Solana scout stream, direct chat with Fennek, verbatim-verified findings, and Streamable HTTP MCP." />
+  <meta property="og:description" content="90% ear, 10% fox. Live Solana scout stream, instant token radar, and open chat with Fennek." />
   <meta property="og:image" content="/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="FENNEK ($FENNEK) — Listening Underneath Solana" />
-  <meta name="twitter:description" content="90% ear, 10% fox. Watch the live Solana dig stream or chat with Fennek directly." />
+  <meta name="twitter:title" content="FENNEK — Listening Underneath Solana" />
+  <meta name="twitter:description" content="90% ear, 10% fox. Watch the live Solana dig stream or chat with Fennek." />
   <meta name="twitter:image" content="/og-image.png" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <link rel="alternate icon" type="image/png" href="/favicon.png" />
   <link rel="stylesheet" href="/site.css" />
 </head>
 <body>
-  <div class="ambient-glow glow-teal" aria-hidden="true"></div>
-  <div class="ambient-glow glow-ginger" aria-hidden="true"></div>
-
-  <!-- Floating Oasis Studio Pill Bar -->
-  <header class="topbar-wrap">
-    <div class="topbar">
-      <a href="#studio" class="brand-cluster" data-nav="studio">
-        <img src="/logo.svg" alt="Fennek" class="brand-fox" width="42" height="42" />
-        <div class="brand-copy">
-          <div class="brand-row">
-            <span class="brand-name">FENNEK</span>
-            <span class="sonar-eq" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i>
-            </span>
-          </div>
-          <span class="brand-sub">90% ear, 10% fox · listening underneath solana</span>
+  <header class="header">
+    <div class="header-inner">
+      <a href="#live" class="brand" id="brandHomeLink">
+        <img src="/logo.svg" alt="Fennek" class="brand-logo" width="36" height="36" />
+        <div class="brand-text">
+          <span class="brand-title">FENNEK</span>
+          <span class="brand-tag">90% ear, 10% fox · solana</span>
         </div>
       </a>
 
-      <nav class="studio-nav" aria-label="Workspace views">
-        <button type="button" class="nav-pill active" data-view="studio">
-          <span class="dot-live"></span> Live Studio
+      <nav class="tabs" aria-label="Views">
+        <button type="button" class="tab active" data-view="live">
+          <span class="pulse-dot"></span> Live
         </button>
-        <button type="button" class="nav-pill" data-view="burrow">
-          Burrow <span class="pill-count" id="navFindingsCount">0</span>
+        <button type="button" class="tab" data-view="burrow">
+          Memory <span class="badge-num" id="memCount">0</span>
         </button>
-        <button type="button" class="nav-pill" data-view="map">
-          Entity Map
-        </button>
-        <button type="button" class="nav-pill" data-view="mcp">
-          MCP &amp; $FENNEK
+        <button type="button" class="tab" data-view="mcp">
+          MCP
         </button>
       </nav>
 
-      <div class="topbar-right">
-        <button type="button" class="tier-chip" id="openTierBtn" title="0-Wallet Read-Only Solana Tier">
-          <span class="tier-dot"></span>
-          <span id="topTierLabel">Visitor · 0-Wallet</span>
+      <div class="header-links">
+        <button type="button" class="ca-pill hidden" id="caCopyBtn" title="Copy $FENNEK address">
+          <span>$FENNEK</span>
+          <code id="caShortText"></code>
         </button>
-        <button type="button" class="ca-chip" id="caCopyBtn" title="Click to copy $FENNEK mint">
-          <span class="ca-sym">$FENNEK</span>
-          <code id="caShortText">OPEN STUDIO</code>
-        </button>
-        <a id="ghLinkBtn" class="social-chip hidden" href="#" target="_blank" rel="noopener">GitHub</a>
-        <a id="xLinkBtn" class="social-chip hidden" href="#" target="_blank" rel="noopener">X</a>
+        <a id="ghLinkBtn" class="ext-link hidden" href="#" target="_blank" rel="noopener">GitHub</a>
+        <a id="xLinkBtn" class="ext-link hidden" href="#" target="_blank" rel="noopener">X</a>
       </div>
     </div>
   </header>
 
-  <main class="shell">
-    <!-- Compact Acoustic Telemetry Strip -->
-    <section class="acoustic-strip" aria-label="Live Burrow telemetry">
-      <div class="strip-headline">
-        <span class="ear-tag">ACOUSTIC TELEMETRY</span>
-        <p>Every public dig cross-checks live Solana RPC, Jupiter v2, DexScreener &amp; DeFiLlama — and only writes figures into the Burrow when the exact quote appears verbatim in the raw step JSON.</p>
-      </div>
-      <div class="strip-metrics">
-        <div class="mini-stat">
-          <span class="mini-val" id="statDigs">—</span>
-          <span class="mini-lbl">Public Digs</span>
-        </div>
-        <div class="mini-stat">
-          <span class="mini-val mint" id="statVerified">—</span>
-          <span class="mini-lbl">Verified Facts</span>
-        </div>
-        <div class="mini-stat">
-          <span class="mini-val" id="statMatchRate">—</span>
-          <span class="mini-lbl">Verbatim Match</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 1: SPLIT STUDIO (SONAR STREAM LEFT + OPEN CHAT WITH FENNEK RIGHT) -->
-    <section id="view-studio" class="view-pane active">
-      <div class="split-studio">
-        <!-- LEFT COLUMN: LIVE SONAR DIG STREAM -->
-        <div class="studio-col stream-col">
-          <div class="panel-card composer-card">
-            <div class="card-head">
-              <div>
-                <span class="eyebrow">PUBLIC SONAR STREAM</span>
-                <h1>Send an ear scout onto Solana</h1>
-              </div>
-              <span class="quota-tag" id="digQuotaLabel">5 free digs / day</span>
-            </div>
-
-            <div class="scout-selector" id="scoutSelector" role="radiogroup" aria-label="Select Ear Scout">
-              <button type="button" class="scout-chip active" data-scout="">Auto Ear</button>
-              <button type="button" class="scout-chip" data-scout="pulse">Pulse Ear</button>
-              <button type="button" class="scout-chip" data-scout="deployer">Track Ear</button>
-              <button type="button" class="scout-chip" data-scout="holders">Pack Ear</button>
-              <button type="button" class="scout-chip" data-scout="defi">Oasis Ear</button>
-              <button type="button" class="scout-chip" data-scout="launch">Dune Ear</button>
-            </div>
-
-            <form id="digForm" class="dig-form">
+  <main class="container">
+    <!-- VIEW 1: LIGHTWEIGHT SPLIT STUDIO (INSTANT RADAR + LIVE FEED LEFT, OPEN CHAT RIGHT) -->
+    <section id="view-live" class="view active">
+      <div class="studio-grid">
+        <!-- LEFT: INSTANT <1S RADAR + LIVE DIG STREAM -->
+        <div class="col-main">
+          <div class="card scanner-card">
+            <form id="scanForm" class="scan-bar">
               <input
-                id="digInput"
+                id="scanInput"
                 type="text"
                 autocomplete="off"
-                placeholder="Paste any Solana mint, wallet, or ask a live question (e.g. JUP pool depth, BONK top 10)..."
-                maxlength="360"
+                spellcheck="false"
+                placeholder="Paste a Solana token CA / ticker, or type a question to dig…"
+                maxlength="320"
               />
-              <button type="submit" id="digSubmitBtn" class="btn-ginger">
-                <span>Send Scout</span>
-              </button>
+              <button type="submit" id="quickBtn" class="btn-primary">Check</button>
+              <button type="button" id="deepDigBtn" class="btn-secondary" title="Run multi-step AI dig into public stream">Deep Dig</button>
             </form>
 
-            <div class="preset-row">
-              <span class="preset-lbl">Try live:</span>
-              <button type="button" class="preset-pill" data-q="Which Solana DeFi protocols lead by TVL right now, and how much did they move in 24h?" data-scout="defi">Solana DeFi TVL</button>
-              <button type="button" class="preset-pill" data-q="Cross-check JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN market cap, authorities, and top pool liquidity." data-scout="pulse">JUP Cross-Check</button>
-              <button type="button" class="preset-pill" data-q="Read DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263 supply and top-10 holder share directly on Solana RPC." data-scout="holders">BONK Top-10 RPC</button>
-              <button type="button" class="preset-pill" data-q="Inspect Wrapped SOL So11111111111111111111111111111111111111112 across Jupiter and DexScreener." data-scout="pulse">Wrapped SOL Check</button>
+            <div class="chips-row">
+              <span class="chips-label">Live on Solana:</span>
+              <button type="button" class="chip" data-quick="JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN">JUP</button>
+              <button type="button" class="chip" data-quick="DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263">BONK</button>
+              <button type="button" class="chip" data-quick="7GCihgDB8fe6KNjn2MYtkzZcRjQy3t9GHdC8uHYmW2hr">POPCAT</button>
+              <button type="button" class="chip" data-quick="So11111111111111111111111111111111111111112">Wrapped SOL</button>
+              <button type="button" class="chip chip-q" data-dig="Which Solana DeFi protocols lead by TVL right now?">Solana TVL ↗</button>
             </div>
+
+            <!-- Instant <1s Verdict Card (populates immediately on CA/ticker check) -->
+            <div id="quickResultBox" class="quick-result hidden" aria-live="polite"></div>
           </div>
 
-          <div class="stream-toolbar">
-            <div class="filter-pills" id="streamFilterPills">
-              <button type="button" class="filter-pill active" data-filter="">All Ears</button>
-              <button type="button" class="filter-pill" data-filter="pulse">Pulse</button>
-              <button type="button" class="filter-pill" data-filter="deployer">Track</button>
-              <button type="button" class="filter-pill" data-filter="holders">Pack</button>
-              <button type="button" class="filter-pill" data-filter="defi">Oasis</button>
-            </div>
-            <button type="button" class="refresh-btn" id="refreshStreamBtn">Refresh feed</button>
+          <div class="feed-header">
+            <h2>Live Dig Stream</h2>
+            <button type="button" class="link-btn" id="refreshBtn">Refresh</button>
           </div>
 
-          <div id="digStreamList" class="dig-stream-list" aria-live="polite">
-            <div class="skeleton-card">Listening to Solana RPC &amp; loading live digs…</div>
+          <div id="digStreamList" class="feed-list" aria-live="polite">
+            <div class="empty-note">Loading live Solana digs…</div>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN: ALWAYS-OPEN DIRECT CHAT WITH FENNEK -->
-        <aside class="studio-col chat-col">
-          <div class="panel-card chat-studio-card">
-            <div class="chat-header">
-              <div class="chat-fox-meta">
-                <div class="fox-avatar-ring">
-                  <img src="/logo.svg" alt="Fennek" width="38" height="38" />
-                  <span class="fox-ear-dot" title="Online"></span>
-                </div>
+        <!-- RIGHT: ALWAYS-OPEN FOX CHAT -->
+        <aside class="col-chat">
+          <div class="card chat-card">
+            <div class="chat-top">
+              <div class="chat-who">
+                <img src="/logo.svg" alt="Fennek" width="32" height="32" class="chat-avatar" />
                 <div>
-                  <h2>Chat with Fennek</h2>
-                  <p>Direct fox line · reads Burrow + live Solana RPC</p>
+                  <strong>Fennek</strong>
+                  <span>Reads live Solana RPC &amp; memory</span>
                 </div>
               </div>
-              <button type="button" class="ghost-sm" id="clearChatBtn">Reset</button>
+              <button type="button" class="link-btn" id="clearChatBtn">Clear</button>
             </div>
 
-            <div id="chatMessages" class="chat-messages"></div>
+            <div id="chatMessages" class="chat-log"></div>
 
-            <div class="chat-quick-row">
-              <button type="button" class="chat-chip" data-chat="What is leading Solana DeFi TVL today?">Solana TVL leaders?</button>
-              <button type="button" class="chat-chip" data-chat="Check JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN liquidity and authorities">Check JUP</button>
-              <button type="button" class="chat-chip" data-chat="Why does Wrapped SOL So11111111111111111111111111111111111111112 show two different market caps?">wSOL mcap?</button>
+            <div class="chat-prompts">
+              <button type="button" class="chip" data-chat="What leads Solana DeFi TVL right now?">Solana TVL?</button>
+              <button type="button" class="chip" data-chat="Check JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN pool liquidity and holders">Check JUP</button>
+              <button type="button" class="chip" data-chat="Why does Wrapped SOL So11111111111111111111111111111111111111112 have two market caps?">wSOL caps?</button>
             </div>
 
-            <form id="chatForm" class="chat-form">
+            <form id="chatForm" class="chat-bar">
               <input
                 id="chatInput"
                 type="text"
                 autocomplete="off"
-                placeholder="Ask Fennek anything about a Solana token, wallet, or pool…"
-                maxlength="600"
+                placeholder="Ask Fennek about any token, wallet, or pool…"
+                maxlength="500"
               />
               <button type="submit" id="chatSendBtn" class="btn-mint">Ask</button>
             </form>
@@ -192,119 +130,70 @@
       </div>
     </section>
 
-    <!-- VIEW 2: BURROW SHARED MEMORY -->
-    <section id="view-burrow" class="view-pane">
-      <div class="panel-card full-card">
-        <div class="card-head">
+    <!-- VIEW 2: SHARED VERIFIED MEMORY + ENTITY CONSTELLATION -->
+    <section id="view-burrow" class="view">
+      <div class="card pad-lg">
+        <div class="row-between">
           <div>
-            <span class="eyebrow">SHARED VERBATIM MEMORY</span>
-            <h2>The Burrow — Verified Solana Findings</h2>
-            <p class="muted-p">Every row below was checked character-for-character against the upstream JSON fetched during its dig. Unmatched numbers never enter the Burrow.</p>
+            <h2>Burrow Memory</h2>
+            <p class="sub">Every saved fact below matched its raw upstream Solana RPC, Jupiter, DexScreener, or DeFiLlama JSON verbatim.</p>
           </div>
-          <div class="burrow-search-box">
-            <input id="burrowSearchInput" type="search" placeholder="Filter by ticker, mint, protocol, or claim…" />
-          </div>
+          <input id="burrowSearchInput" class="search-input" type="search" placeholder="Search ticker, mint, or protocol…" />
         </div>
-        <div id="burrowFindingsList" class="findings-grid"></div>
+        <div id="burrowFindingsList" class="memory-grid"></div>
       </div>
     </section>
 
-    <!-- VIEW 3: ENTITY CONSTELLATION MAP -->
-    <section id="view-map" class="view-pane">
-      <div class="panel-card full-card">
-        <div class="card-head">
-          <div>
-            <span class="eyebrow">ACOUSTIC CONSTELLATION</span>
-            <h2>Connected Tokens, Protocols &amp; Deployer Wallets</h2>
-            <p class="muted-p">Entities uncovered across public digs. Click any node to inspect its verified findings in the Burrow.</p>
-          </div>
-        </div>
-        <div class="graph-stage-wrap">
-          <svg id="entityGraphSvg" viewBox="0 0 860 440" role="img" aria-label="Solana entity graph"></svg>
-        </div>
-      </div>
-    </section>
+    <!-- VIEW 3: CLEAN MCP CONNECT (+ OPTIONAL TIER BOX ONLY WHEN TOKEN IS LIVE) -->
+    <section id="view-mcp" class="view">
+      <div class="mcp-layout" id="mcpLayout">
+        <div class="card pad-lg">
+          <h2>Plug Fennek into Cursor or Claude</h2>
+          <p class="sub">Streamable HTTP MCP (<code>JSON-RPC 2.0</code>) — zero npm packages to install, zero wallet popups.</p>
 
-    <!-- VIEW 4: STREAMABLE HTTP MCP & 0-WALLET $FENNEK TIERS -->
-    <section id="view-mcp" class="view-pane">
-      <div class="mcp-grid">
-        <div class="panel-card">
-          <span class="eyebrow">MODEL CONTEXT PROTOCOL · JSON-RPC 2.0</span>
-          <h2>Plug Fennek into Cursor, Claude, or your own agent</h2>
-          <p class="muted-p">Fennek exposes a live Streamable HTTP MCP server right on <code>/mcp</code> — zero local npm installs required. Give any AI coding assistant or trading bot instant access to <code>burrow_search</code>, <code>send_fennek_dig</code>, and <code>ask_fennek</code>.</p>
-
-          <div class="code-box-wrap">
-            <div class="code-box-head">
-              <span>mcp.json (Cursor / Claude Desktop)</span>
-              <button type="button" class="ghost-sm" id="copyMcpConfigBtn">Copy JSON</button>
+          <div class="code-panel">
+            <div class="code-top">
+              <span>.cursor/mcp.json</span>
+              <button type="button" class="link-btn" id="copyMcpBtn">Copy</button>
             </div>
-            <pre class="code-box" id="mcpConfigPre"></pre>
+            <pre id="mcpConfigPre"></pre>
           </div>
 
-          <div class="mcp-live-tester">
-            <div class="tester-head">
-              <strong>Live MCP Endpoint Verification</strong>
-              <button type="button" class="btn-mint btn-sm" id="runMcpTestBtn">Ping /mcp Live</button>
-            </div>
-            <pre class="code-box compact-pre" id="mcpTestOutput">Click "Ping /mcp Live" to run a real JSON-RPC 2.0 tools/list + burrow_search call in your browser.</pre>
+          <div class="mcp-ping-row">
+            <button type="button" class="btn-secondary btn-sm" id="pingMcpBtn">Test /mcp in browser</button>
+            <span class="sub-inline">Tools: <code>burrow_search</code> · <code>send_fennek_dig</code> · <code>ask_fennek</code></span>
           </div>
+          <pre id="mcpPingOut" class="ping-out hidden"></pre>
         </div>
 
-        <div class="panel-card">
-          <span class="eyebrow">100% READ-ONLY · ZERO WALLET POPUPS</span>
-          <h2>$FENNEK Acoustic Access Tiers</h2>
-          <p class="muted-p">Never connect Phantom or sign blind messages on a new token site. Paste any public Solana address below — Fennek checks its <code>$FENNEK</code> balance read-only via Solana RPC <code>getTokenAccountsByOwner</code> and unlocks higher daily scout &amp; MCP limits.</p>
-
-          <div class="tier-cards-stack">
-            <div class="tier-row-card">
-              <div>
-                <strong>Dune Visitor</strong>
-                <span>0 $FENNEK · Open to everyone</span>
-              </div>
-              <code>5 digs · 25 chats · 250 MCP/day</code>
-            </div>
-            <div class="tier-row-card highlight-mint">
-              <div>
-                <strong>Scout Ear</strong>
-                <span>Hold &ge; 1,000,000 $FENNEK (read-only)</span>
-              </div>
-              <code>20 digs · 120 chats · 5,000 MCP/day</code>
-            </div>
-            <div class="tier-row-card highlight-ginger">
-              <div>
-                <strong>Alpha Ear</strong>
-                <span>Hold &ge; 5,000,000 $FENNEK (read-only)</span>
-              </div>
-              <code>50 deep digs · 400 chats · 50k MCP/day</code>
-            </div>
-          </div>
-
-          <form id="walletTierForm" class="wallet-tier-form">
-            <label for="publicWalletInput">Public Solana Wallet Address (optional, 0 signatures)</label>
-            <div class="wallet-input-row">
-              <input id="publicWalletInput" type="text" placeholder="Paste public Solana address (e.g. 7xKX...)" autocomplete="off" />
-              <button type="submit" class="btn-ginger btn-sm">Check &amp; Mint Key</button>
-            </div>
+        <!-- Shown ONLY after $FENNEK token mint is live on Solana (completely hidden pre-launch!) -->
+        <div class="card pad-lg hidden" id="tokenTierCard">
+          <h2>Read-Only $FENNEK Tiers</h2>
+          <p class="sub">Zero wallet connections or signatures. Paste a public Solana address to check <code>$FENNEK</code> balance via RPC and mint a higher-rate API key.</p>
+          <ul class="tier-list">
+            <li><span>Open Visitor (0)</span><code>5 digs · 25 chats / day</code></li>
+            <li><span>Scout (&ge; 1M $FENNEK)</span><code>20 digs · 5k MCP / day</code></li>
+            <li><span>Alpha Ear (&ge; 5M $FENNEK)</span><code>50 deep digs · 50k MCP / day</code></li>
+          </ul>
+          <form id="walletTierForm" class="scan-bar" style="margin-top:12px">
+            <input id="publicWalletInput" type="text" placeholder="Public Solana address (read-only)…" autocomplete="off" />
+            <button type="submit" class="btn-primary btn-sm">Mint Key</button>
           </form>
-
-          <div id="mintedKeyBox" class="minted-key-box hidden"></div>
+          <div id="mintedKeyBox" class="key-out hidden"></div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="studio-footer">
+  <footer class="footer">
     <div class="footer-inner">
-      <span><strong>FENNEK</strong> · Autonomous Solana Scout Stream, Fox Chat &amp; Shared MCP Memory</span>
-      <span class="footer-links">
+      <span>FENNEK · Listening underneath Solana</span>
+      <div class="footer-links">
         <a id="footerGhLink" class="hidden" href="#" target="_blank" rel="noopener">GitHub</a>
-        <span id="footerGhDot" class="hidden">·</span>
         <a href="/SKILL.md" target="_blank" rel="noopener">SKILL.md</a>
-        <span>·</span>
         <a href="/llms.txt" target="_blank" rel="noopener">llms.txt</a>
-        <span>·</span>
-        <a href="/mcp" target="_blank" rel="noopener">/mcp spec</a>
-      </span>
+        <a href="/mcp" target="_blank" rel="noopener">/mcp</a>
+      </div>
     </div>
   </footer>
 

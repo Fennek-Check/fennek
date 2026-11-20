@@ -1,38 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <defs><clipPath id="fc"><rect width="512" height="512" rx="92"/></clipPath></defs>
+  <defs><clipPath id="fc"><rect width="512" height="512" rx="88"/></clipPath></defs>
   <g clip-path="url(#fc)">
-    <rect width="512" height="512" fill="#0D5C59"/>
+    <rect width="512" height="512" fill="#F39228"/>
     
-    <!-- Wide Fluffy Chest Emerging from Bottom Edge -->
-    <path d="M 156 512 C 160 408, 184 344, 214 314 L 298 314 C 328 344, 352 408, 356 512 Z" fill="#F8F1E3"/>
-
-    <!-- Giant Sweeping Fennec Radar Ears (Outer Ginger) -->
-    <path d="M 198 242 C 102 212, 42 134, 34 34 C 138 42, 218 106, 242 192 Z" fill="#FF732E"/>
-    <path d="M 314 242 C 410 212, 470 134, 478 34 C 374 42, 294 106, 270 192 Z" fill="#FF732E"/>
-
-    <!-- Large Cream Inner Ear Cones -->
-    <path d="M 188 218 C 122 190, 78 132, 68 68 C 138 78, 194 126, 216 188 Z" fill="#F8F1E3"/>
-    <path d="M 324 218 C 390 190, 434 132, 444 68 C 374 78, 318 126, 296 188 Z" fill="#F8F1E3"/>
-
-    <!-- Subtle Inner Ear Canal Shadow Cutout -->
-    <path d="M 176 212 C 142 194, 118 162, 110 124 C 148 134, 178 164, 194 198 Z" fill="#0D5C59"/>
-    <path d="M 336 212 C 370 194, 394 162, 402 124 C 364 134, 334 164, 318 198 Z" fill="#0D5C59"/>
-
-    <!-- Upper Fox Head Dome (Ginger) -->
-    <path d="M 128 262 C 132 196, 184 156, 256 156 C 328 156, 380 196, 384 262 L 256 338 Z" fill="#FF732E"/>
-
-    <!-- Classic Fox Bicolor Cream Cheek Ruffs Meeting at the Snout -->
-    <path d="M 124 258 C 158 242, 212 264, 256 334 C 300 264, 354 242, 388 258 C 368 312, 308 352, 256 372 C 204 352, 144 312, 124 258 Z" fill="#F8F1E3"/>
-
-    <!-- Crisp Expressive Dark Fox Eyes + Alive Catchlights -->
-    <circle cx="198" cy="258" r="20" fill="#141118"/>
-    <circle cx="204" cy="252" r="6" fill="#F8F1E3"/>
-
-    <circle cx="314" cy="258" r="20" fill="#141118"/>
-    <circle cx="320" cy="252" r="6" fill="#F8F1E3"/>
-
-    <!-- Crisp Dark Button Nose -->
-    <polygon points="238,332 274,332 256,354" fill="#141118"/>
+    <!-- Rear radar ear -->
+    <path fill="#16110E" d="M 224 188 C 198 112, 214 46, 260 22 C 286 70, 290 134, 272 194 Z"/>
+    <!-- Main silhouette: slender neck + sweeping foreground ear + alert upturned fox snout -->
+    <path fill="#16110E" d="
+      M 152 512
+      C 152 414, 170 338, 206 280
+      C 138 234, 86 152, 72 52
+      C 164 62, 232 118, 262 190
+      C 300 184, 338 196, 364 220
+      L 436 242
+      C 442 254, 432 270, 412 276
+      L 356 288
+      C 338 308, 316 320, 298 324
+      C 316 376, 326 440, 326 512
+      Z
+    "/>
+    <!-- Cream inner-ear cone -->
+    <path fill="#F6EBD6" d="M 208 236 C 158 198, 122 142, 108 88 C 166 102, 210 146, 234 202 Z"/>
+    <!-- Almond cream eye -->
+    <ellipse cx="332" cy="244" rx="14" ry="10" transform="rotate(-6 332 244)" fill="#F6EBD6"/>
   
   </g>
 </svg>

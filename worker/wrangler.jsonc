@@ -28,7 +28,7 @@
     "TOKEN_ADDRESS": "",
     "HOLD_SCOUT": "1000000",
     "HOLD_ALPHA": "5000000",
-    "X_URL": "",
+    "X_URL": "https://x.com/fennekcheck",
     "GITHUB_URL": "https://github.com/Fennek-Check/fennek"
   }
 }

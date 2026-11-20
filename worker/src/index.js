@@ -1,5 +1,5 @@
 import { SCOUTS, createAndRunDig, getDigById, chatWithFennek, runScheduledHouseDig } from './scouts.js';
-import { checkReadOnlyBalance, isSolanaPubkey } from './tools.js';
+import { checkReadOnlyBalance, executeScoutTool, isSolanaPubkey } from './tools.js';
 
 const CORS = {
   'access-control-allow-origin': '*',
@@ -269,7 +269,7 @@ async function handleMcp(req, env) {
   return json({ jsonrpc: '2.0', id, error: { code: -32601, message: `Unknown method: ${method}` } }, 404);
 }
 
-export async function handle(req, env) {
+export async function handle(req, env, ctx) {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
   const url = new URL(req.url);
   const { pathname } = url;
@@ -280,6 +280,7 @@ export async function handle(req, env) {
 > 90% ear, 10% fox. Listening underneath Solana.
 
 - Live Studio & Chat: ${url.origin}
+- Instant <1s Token Radar: ${url.origin}/v1/quick?q=JUP
 - Streamable HTTP MCP (JSON-RPC 2.0): ${url.origin}/mcp
 - Public Source Repository: ${env.GITHUB_URL || 'https://github.com/Fennek-Check/fennek'}
 - Zero-Wallet Read-Only Tiering: Pass X-Solana-Wallet: <public_solana_address> or Bearer fennek_... key (verified via Solana RPC getTokenAccountsByOwner, zero signatures).
@@ -288,13 +289,97 @@ export async function handle(req, env) {
     return new Response(txt, { status: 200, headers: { 'content-type': 'text/plain; charset=utf-8', ...CORS } });
   }
 
+  const warmBg = () => {
+    const p = ensureWarmBurrow(env).catch(() => {});
+    if (ctx?.waitUntil) ctx.waitUntil(p);
+  };
+
   if (pathname === '/mcp' || pathname.startsWith('/mcp/')) {
-    await ensureWarmBurrow(env);
+    warmBg();
     return handleMcp(req, env);
   }
 
   if (pathname.startsWith('/v1/')) {
-    await ensureWarmBurrow(env);
+    warmBg();
+
+    if (pathname === '/v1/quick' && req.method === 'GET') {
+      const q = (url.searchParams.get('q') || '').trim();
+      if (!q) return json({ error: 'Provide ?q=<mint_or_ticker>' }, 400);
+      const t0 = Date.now();
+      try {
+        const directMint = isSolanaPubkey(q) ? q : '';
+        const fastHolders = (m) =>
+          Promise.race([
+            executeScoutTool(env, 'chain_holders', { mint: m, why: 'RPC top-10 check' }).catch(() => null),
+            new Promise((r) => setTimeout(() => r(null), 650)),
+          ]);
+        const [tok, preHolders] = await Promise.all([
+          executeScoutTool(env, 'token_lookup', { query: q, why: 'Instant <1s radar check' }),
+          directMint ? fastHolders(directMint) : Promise.resolve(null),
+        ]);
+        const holders = preHolders || (tok.mint && !directMint ? await fastHolders(tok.mint) : null);
+
+        const topPool = tok.top_solana_pools?.[0] || null;
+        const liq = topPool?.liquidity_usd ?? 0;
+        const top10 = holders?.top10_share_pct ?? tok.jupiter_top_holders_pct ?? null;
+        const flags = [];
+        let level = 'safe';
+        let badge = 'CLEAN SIGNAL';
+
+        if (tok.is_wrapped_native_sol) {
+          level = 'info';
+          badge = 'NATIVE + WRAPPED';
+          flags.push('Wrapped SOL (wSOL): Jupiter shows full SOL chain cap; DexScreener shows wrapped pool cap');
+        } else {
+          if (tok.mint_authority_disabled === false) {
+            level = 'danger';
+            badge = 'MINT ENABLED';
+            flags.push('Mint authority is still active');
+          }
+          if (tok.freeze_authority_disabled === false) {
+            if (level !== 'danger') {
+              level = 'warn';
+              badge = 'FREEZE ACTIVE';
+            }
+            flags.push('Freeze authority is active');
+          }
+          if (liq > 0 && liq < 12_000) {
+            if (level === 'safe') {
+              level = 'warn';
+              badge = 'THIN POOL';
+            }
+            flags.push(`Thin top pool liquidity ($${liq.toLocaleString('en-US')})`);
+          }
+          if (top10 != null && top10 >= 50) {
+            if (level === 'safe') {
+              level = 'warn';
+              badge = 'CONCENTRATED';
+            }
+            flags.push(`Top 10 accounts hold ${top10}% of supply`);
+          }
+          if (tok.dev_total_mints != null && tok.dev_total_mints >= 30) {
+            level = 'danger';
+            badge = 'SERIAL DEPLOYER';
+            flags.push(`Deployer wallet minted ${tok.dev_total_mints} lifetime tokens`);
+          }
+          if (tok.cross_source_divergence) {
+            flags.push('Cross-source mcap >25% divergence between Jupiter & DexScreener');
+          }
+          if (!flags.length) {
+            flags.push('Mint & freeze disabled, cross-checked across Jupiter + DexScreener + Solana RPC');
+          }
+        }
+
+        return json({
+          latencyMs: Date.now() - t0,
+          verdict: { level, badge, flags },
+          token: tok,
+          holders,
+        });
+      } catch (e) {
+        return json({ error: e?.message || 'Token not found on Solana' }, 404);
+      }
+    }
 
     if (pathname === '/v1/status' && req.method === 'GET') {
       const [caller, stats] = await Promise.all([

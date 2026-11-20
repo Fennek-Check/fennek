@@ -106,6 +106,20 @@ test('Streamable HTTP MCP (/mcp) responds to JSON-RPC 2.0 initialize, tools/list
   assert.ok(callJson.result.structuredContent.count >= 1);
 });
 
+test('Instant <1s radar (/v1/quick) returns CLEAN SIGNAL on JUP and NATIVE + WRAPPED on wSOL', async () => {
+  const env = makeTestEnv();
+  const r1 = await handle(new Request('http://localhost/v1/quick?q=So11111111111111111111111111111111111111112'), env);
+  assert.equal(r1.status, 200);
+  const d1 = await r1.json();
+  assert.equal(d1.verdict.badge, 'NATIVE + WRAPPED');
+  assert.equal(d1.token.is_wrapped_native_sol, true);
+
+  const r2 = await handle(new Request('http://localhost/v1/quick?q=JUPyiwrYJFskUPiHa7hkeR8VUtAeFoSYbKedZNsDvCN'), env);
+  assert.equal(r2.status, 200);
+  const d2 = await r2.json();
+  assert.equal(d2.token.symbol, 'JUP');
+});
+
 test('Static site passes Larpcheck anti-red-flag audit (no bare github.com, no fake buyback promises, no fake npx)', () => {
   const html = fs.readFileSync(path.join(SITE, 'index.html'), 'utf8');
   const js = fs.readFileSync(path.join(SITE, 'app.js'), 'utf8');

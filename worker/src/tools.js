@@ -257,7 +257,16 @@ export async function executeScoutTool(env, name, args = {}) {
     if (!q) throw new ProbeError('query is required');
 
     const jupUrl = `https://lite-api.jup.ag/tokens/v2/search?query=${encodeURIComponent(q)}`;
-    const jupArr = await fetchJsonSafe(jupUrl).catch(() => []);
+    const directMint = isSolanaPubkey(q) ? q : '';
+    const initialDexUrl = directMint
+      ? `https://api.dexscreener.com/latest/dex/tokens/${encodeURIComponent(directMint)}`
+      : `https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(q)}`;
+
+    const [jupArr, initialDex] = await Promise.all([
+      fetchJsonSafe(jupUrl).catch(() => []),
+      fetchJsonSafe(initialDexUrl).catch(() => ({ pairs: [] })),
+    ]);
+
     const tok =
       Array.isArray(jupArr) && jupArr.length
         ? jupArr.find((t) => t.id === q) ||
@@ -265,12 +274,11 @@ export async function executeScoutTool(env, name, args = {}) {
           jupArr[0]
         : null;
 
-    const targetMint = tok?.id || (isSolanaPubkey(q) ? q : '');
-    const dexUrl = targetMint
-      ? `https://api.dexscreener.com/latest/dex/tokens/${encodeURIComponent(targetMint)}`
-      : `https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(q)}`;
-
-    const dexData = await fetchJsonSafe(dexUrl).catch(() => ({ pairs: [] }));
+    const targetMint = tok?.id || directMint;
+    const dexData =
+      !directMint && targetMint
+        ? await fetchJsonSafe(`https://api.dexscreener.com/latest/dex/tokens/${encodeURIComponent(targetMint)}`).catch(() => initialDex)
+        : initialDex;
     const solPairs = (dexData?.pairs || [])
       .filter((p) => p.chainId === 'solana')
       .sort((a, b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
