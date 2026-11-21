@@ -17,6 +17,8 @@
   <a href="https://fennek.fun/llms.txt"><strong>llms.txt</strong></a>
 </p>
 
+**Solana Token (`$FENNEK`):** `A5PuFw8q7EbsERHkMbnEr6MuMe5qrBCWoYUFJPwKpump`
+
 ---
 
 ## Overview
